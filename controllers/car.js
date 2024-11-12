@@ -14,11 +14,11 @@ async function create(req, res) {
     const {...data} = req.body;
 
     if (!data.name || !data.brand || !data.power) {
-        return res.status(400).send('missing datas');
+        return res.status(400).send('Missing data for create new car');
     }
 
     const newCar = await Car.create({...data});
-    res.status(201).send(newCar);
+    res.status(201).send({ message: 'New car created successfully' });
 }
 
 async function remove(req, res) {
@@ -35,9 +35,9 @@ async function update(req, res) {
     const { ...data } = req.body;
     const car = await Car.findByIdAndUpdate(req.params.id, data, { new: true });
     if (car) {
-        res.status(201).send(car);
+        res.status(201).send({ message: 'Car updated successfully' });
     } else {
-        res.status(404).send({ error: 'Fondue not found' });
+        res.status(404).send({ error: 'Car not found' });
     }
 
 }

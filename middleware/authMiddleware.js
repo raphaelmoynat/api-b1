@@ -13,7 +13,7 @@ function verifyToken(req, res, next) {
         req.userId = decoded.userId;
         next();
     } catch (error) {
-        res.status(401).json({ error: 'Invalid token' });
+        res.status(401).json({ error: 'Invalid token. Log in for generate a new token' });
     }
 };
 

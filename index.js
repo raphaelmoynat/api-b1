@@ -20,10 +20,17 @@ mongoose.connect(mongdbUri)
     })
 
 app.use(express.json())
+app.use(express.static('public'))
+
 
 app.use('/cars', authMiddleware, carsRoutes);
 app.use('/', authRoutes );
 
+app.set('view engine', 'ejs');
+
+app.get('/', (req, res) => {
+    res.render('documentation');
+});
 
 app.listen(port, () => {
     console.log("express is running")
