@@ -13,6 +13,12 @@ const CarSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.Number,
         required: true,
     },
+    comments: [
+        {
+            type: mongoose.SchemaTypes.ObjectId,
+            ref: 'Comment',
+        },
+    ]
 })
 
 module.exports = mongoose.model('Car', CarSchema);

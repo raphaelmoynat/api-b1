@@ -8,7 +8,7 @@ const mongdbUri = process.env.MONGODB_URI;
 
 const carsRoutes = require('./routes/cars');
 const authRoutes = require('./routes/auth');
-const authMiddleware = require('./middleware/authMiddleware');
+const commentRoutes = require('./routes/comment');
 
 
 mongoose.connect(mongdbUri)
@@ -23,8 +23,9 @@ app.use(express.json())
 app.use(express.static('public'))
 
 
-app.use('/cars', authMiddleware, carsRoutes);
+app.use('/cars', carsRoutes);
 app.use('/', authRoutes );
+app.use('/comments', commentRoutes );
 
 app.set('view engine', 'ejs');
 

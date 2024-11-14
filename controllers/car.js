@@ -1,12 +1,18 @@
 const Car = require('../models/Car');
 
 async function index(req, res) {
-    const cars = await Car.find();
+    const cars = await Car.find().select('-__v').populate({
+        path: 'comments',
+        select: 'content'
+    });
     res.send(cars);
 }
 
 async function show(req, res) {
-    const car = await Car.findById(req.params.id);
+    const car = await Car.findById(req.params.id).select('-__v').populate({
+        path: 'comments',
+        select: 'content'
+    })
     res.send(car);
 }
 
@@ -18,7 +24,7 @@ async function create(req, res) {
     }
 
     const newCar = await Car.create({...data});
-    res.status(201).send({ message: 'New car created successfully' });
+    res.status(201).send({ message: 'New car created successfully', newCar });
 }
 
 async function remove(req, res) {
@@ -35,7 +41,7 @@ async function update(req, res) {
     const { ...data } = req.body;
     const car = await Car.findByIdAndUpdate(req.params.id, data, { new: true });
     if (car) {
-        res.status(201).send({ message: 'Car updated successfully' });
+        res.status(201).send({ message: 'Car updated successfully', car });
     } else {
         res.status(404).send({ error: 'Car not found' });
     }
