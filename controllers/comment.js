@@ -3,16 +3,19 @@ const Car = require('../models/Car')
 
 
 async function index(req, res) {
-    const comments = await Comment.find().select('-__v').populate({
+    const comments = await Comment.find().populate([{
         path: 'car',
         select: 'name brand'
-    });
+    },{
+        path: 'author',
+        select: 'username'
+    }]);
     res.send(comments);
 }
 
 
 async function show(req, res) {
-    const comment = await Comment.findById(req.params.id).select('-__v').populate({
+    const comment = await Comment.findById(req.params.id).populate({
         path: 'car',
         select: 'name brand'
     })
@@ -25,9 +28,12 @@ async function create(req, res) {
     if (!content || !car) {
         return res.status(400).send('missing data')
     }
+    const authorId = req.userId;
+    console.log(authorId);
+
 
     try {
-        const newComment = await Comment.create({ content, car })
+        const newComment = await Comment.create({ content, car, author: authorId })
         await Car.findByIdAndUpdate(car, { $push: { comments: newComment._id } })
 
 
@@ -41,11 +47,16 @@ async function create(req, res) {
 
 
 async function remove(req, res) {
+
+    const userConnected = req.userId;
     try {
         const comment = await Comment.findById(req.params.id)
         console.log(comment)
         if (!comment) {
             return res.status(404).send({ error: 'comment not found' })
+        }
+        if (comment.author.toString() !== userConnected) {
+            return res.status(400).send({error:'You\'re not allowed to delete this comment'});
         }
         await Comment.findByIdAndDelete(req.params.id)
 
@@ -62,8 +73,13 @@ async function remove(req, res) {
 
 
 async function update(req, res) {
+    const userConnected = req.userId;
     const { ...data } = req.body;
-    const comment = await Comment.findByIdAndUpdate(req.params.id, data, { new: true }).populate('car')
+    const comment = await Comment.findById(req.params.id)
+    if (comment.author.toString() !== userConnected) {
+        return res.status(400).send({error:'You\'re not allowed to update this comment'});
+    }
+    await Comment.findByIdAndUpdate(req.params.id, data, { new: true }).populate('car')
     if (comment) {
         res.status(201).send({ message: 'Comment updated successfully', comment })
     } else {

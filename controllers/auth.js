@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 async function register(req,res){
 
-    const { username, email, password } = req.body;
+    const { username, password } = req.body;
 
     try {
         const existingUser = await User.findOne({ username });
@@ -42,7 +42,7 @@ async function login(req, res) {
             return res.status(400).json({ message: 'Incorrect username or password' });
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.status(200).json({ message: 'Connection successful', token });
     } catch (error) {
