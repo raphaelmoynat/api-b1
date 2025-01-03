@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API DOCUMENTATION</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">API Documentation</a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+
+
+        <div class="container mt-5">
+            <h1 class="mb-4">API URL : apib1.raphaelmoynat.com</h1>
+
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Register</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>POST /register</code></p>
+                    <p><strong>Description:</strong> Creates a new user account.</p>
+                    <h6>Request Example:</h6>
+                    <pre class="bg-light p-3">
+                    {
+                        "username": "userapi",
+                        "password": "passworduser"
+                    }
+                </pre>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                    {
+                        "message": "User created successfully"
+                    }
+                </pre>
+                </div>
+            </div>
+
+
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Login</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>POST /login</code></p>
+                    <p><strong>Description:</strong> Authenticates a user and provides JWT tokens.</p>
+                    <h6>Request Example:</h6>
+                    <pre class="bg-light p-3">
+                    {
+                        "username": "userapi",
+                        "password": "passworduser"
+                    }
+                </pre>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        {
+                            "message": "Connection successful",
+                            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                        }
+                </pre>
+                </div>
+            </div>
+
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Create a car</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>POST /cars/create</code></p>
+                    <p><strong>Description:</strong>Create a new car</p>
+                    <p><strong>Authorization:</strong> <code>Bearer &lt;token&gt;</code></p>
+                    <h6>Request Example:</h6>
+                    <pre class="bg-light p-3">
+                    {
+                        "name": "Classe A",
+                        "brand": "Mercedes",
+                        "power": 150
+                    }
+                </pre>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        {
+                            "message": "New car created successfully",
+                            "newCar": {
+                                "name": "Classe A",
+                                "brand": "Mercedes",
+                                "power": 150,
+                                "comments": [],
+                                "author": "673261e06f29c178d23e6237",
+                                "_id": "6778016c805a026fa1596b51",
+                                "__v": 0
+                            }
+                        }
+                </pre>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Get all cars</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>GET /cars</code></p>
+                    <p><strong>Description:</strong>Get all cars details</p>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        [
+                            {
+                                "_id": "6778016c805a026fa1596b51",
+                                "name": "Classe A",
+                                "brand": "Mercedes",
+                                "power": 150,
+                                "comments": [],
+                                "author": {
+                                    "_id": "673261e06f29c178d23e6237",
+                                    "username": "raphael"
+                                },
+                                "__v": 0
+                            },
+                            {
+                                    "_id": "6778016c805a026fa1596b51",
+                                    "name": "Classe B",
+                                    "brand": "Mercedes",
+                                    "power": 160,
+                                    "comments": [],
+                                    "author": {
+                                        "_id": "673261e06f29c178d23e6237",
+                                        "username": "raphael"
+                                    },
+                                    "__v": 0
+                            }
+                        ]
+                </pre>
+                </div>
+            </div>
+
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Get car detail</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>GET /cars/show/carId</code></p>
+                    <p><strong>Description:</strong>Get car details</p>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        {
+                            "_id": "6778016c805a026fa1596b51",
+                            "name": "Classe A",
+                            "brand": "Mercedes",
+                            "power": 150,
+                            "comments": [],
+                            "author": {
+                                "_id": "673261e06f29c178d23e6237",
+                                "username": "raphael"
+                            },
+                            "__v": 0
+                        }
+                </pre>
+                </div>
+            </div>
+
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Update a car</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>PUT /cars/update/carId</code></p>
+                    <p><strong>Description:</strong>Update a car if you're the author</p>
+                    <p><strong>Authorization:</strong> <code>Bearer &lt;token&gt;</code></p>
+                    <h6>Request Example:</h6>
+                    <pre class="bg-light p-3">
+                    {
+                        "name": "Classe B",
+                    }
+                    </pre>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        {
+                            "message": "Car updated successfully",
+                            "car": {
+                                "_id": "6778016c805a026fa1596b51",
+                                "name": "Classe B",
+                                "brand": "Mercedes",
+                                "power": 150,
+                                "comments": [],
+                                "author": {
+                                    "_id": "673261e06f29c178d23e6237",
+                                    "username": "raphael"
+                                },
+                                "__v": 0
+                            }
+                        }
+                </pre>
+                </div>
+            </div>
+
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Delete a car</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>DELETE /cars/delete/carId</code></p>
+                    <p><strong>Description:</strong>Delete a car if you're the author</p>
+                    <p><strong>Authorization:</strong> <code>Bearer &lt;token&gt;</code></p>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        {
+                            "message": "Car deleted successfully"
+                        }
+                </pre>
+                </div>
+            </div>
+
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Get all comments</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>GET /comments</code></p>
+                    <p><strong>Description:</strong>Get all comments</p>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        [
+                            {
+                                "_id": "673db1ca8d2f6b0adbafe9df",
+                                "content": "sympa",
+                                "car": {
+                                    "_id": "673db1ab8d2f6b0adbafe9da",
+                                    "name": "C3",
+                                    "brand": "Citroen"
+                                },
+                                "author": {
+                                    "_id": "673261e06f29c178d23e6237",
+                                    "username": "raphael"
+                                },
+                                "__v": 0
+                            },
+                            {
+                                "_id": "673db1ce8d2f6b0adbafe9e2",
+                                "content": "joli",
+                                "car": {
+                                    "_id": "673db1ab8d2f6aaldsdbafe9da",
+                                    "name": "C3",
+                                    "brand": "Citroen"
+                                },
+                                "author": {
+                                    "_id": "673261e06f29c178d23e6237",
+                                    "username": "raphael"
+                                },
+                                "__v": 0
+                            }
+                        ]
+                </pre>
+                </div>
+            </div>
+
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Get one comment</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>GET /comments/show/commentId</code></p>
+                    <p><strong>Description:</strong>Get one comment</p>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        {
+                            "_id": "6778079b1fb7ba19fa568603",
+                            "content": "sympa",
+                            "car": {
+                                "_id": "67780548a72ec0cfd1d5b457",
+                                "name": "Classe B",
+                                "brand": "Mercedes"
+                            },
+                            "author": {
+                                "_id": "673261e06f29c178d23e6237",
+                                "username": "raphael"
+                            },
+                            "__v": 0
+                        }
+                </pre>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Create a comment</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>POST /comments/create</code></p>
+                    <p><strong>Description:</strong>Create a new comment</p>
+                    <p><strong>Authorization:</strong> <code>Bearer &lt;token&gt;</code></p>
+                    <h6>Request Example:</h6>
+                    <pre class="bg-light p-3">
+                    {
+                        "comment": "sympa",
+                        "car": "carId"
+                    }
+                </pre>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        {
+                            "message": "Comment created successfully",
+                            "newComment": {
+                                "content": "sympa",
+                                "car": "67780548a72ec0cfd1d5b457",
+                                "author": "673261e06f29c178d23e6237",
+                                "_id": "6778079b1fb7ba19fa568603",
+                                "__v": 0
+                            }
+                        }
+                </pre>
+                </div>
+            </div>
+
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Update a comment</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>PUT /comments/update/commentId</code></p>
+                    <p><strong>Description:</strong>Update a comment if you're the author</p>
+                    <p><strong>Authorization:</strong> <code>Bearer &lt;token&gt;</code></p>
+                    <h6>Request Example:</h6>
+                    <pre class="bg-light p-3">
+                    {
+                        "name": "joli joli",
+                    }
+                    </pre>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        {
+                            "message": "Comment updated successfully",
+                            "comment": {
+                                "_id": "6778079b1fb7ba19fa568603",
+                                "content": "joli joli",
+                                "car": {
+                                    "_id": "67780548a72ec0cfd1d5b457",
+                                    "name": "Classe B",
+                                    "brand": "Mercedes"
+                                },
+                                "author": {
+                                    "_id": "673261e06f29c178d23e6237",
+                                    "username": "raphael"
+                                },
+                                "__v": 0
+                            }
+                        }
+                </pre>
+                </div>
+            </div>
+
+
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h5>Delete a comment</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>URL:</strong> <code>DELETE /comments/delete/commentId</code></p>
+                    <p><strong>Description:</strong>Delete a comment if you're the author</p>
+                    <p><strong>Authorization:</strong> <code>Bearer &lt;token&gt;</code></p>
+                    <h6>Response Example:</h6>
+                    <pre class="bg-light p-3">
+                        {
+                            "message": "Comment deleted successfully"
+                        }
+                </pre>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>

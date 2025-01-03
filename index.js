@@ -27,7 +27,13 @@ app.use('/cars', carsRoutes);
 app.use('/', authRoutes );
 app.use('/comments', commentRoutes );
 
+app.set('views', './views');
 
+app.set('view engine', 'ejs');
+
+app.get('/', (req, res) => {
+    res.render('index');
+});
 
 app.listen(port, () => {
     console.log("express is running")

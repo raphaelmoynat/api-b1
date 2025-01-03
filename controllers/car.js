@@ -13,10 +13,13 @@ async function index(req, res) {
 }
 
 async function show(req, res) {
-    const car = await Car.findById(req.params.id).populate({
+    const car = await Car.findById(req.params.id).populate([{
         path: 'comments',
         select: 'content'
-    })
+    },{
+        path:'author',
+        select: 'username'
+    }]);
     res.send(car);
 
 }
@@ -73,9 +76,13 @@ async function update(req, res) {
 
 
     const { ...data } = req.body;
-    await Car.findByIdAndUpdate(req.params.id, data, { new: true });
+    const updatedCar = await Car.findByIdAndUpdate(req.params.id, data, { new: true }).populate([
+       {
+        path: 'author',
+        select: 'username'
+    }]);
 
-    res.status(201).send({ message: 'Car updated successfully', car });
+    res.status(201).send({ message: 'Car updated successfully', updatedCar });
 
 }
 

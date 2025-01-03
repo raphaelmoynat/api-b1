@@ -15,10 +15,13 @@ async function index(req, res) {
 
 
 async function show(req, res) {
-    const comment = await Comment.findById(req.params.id).populate({
+    const comment = await Comment.findById(req.params.id).populate([{
         path: 'car',
         select: 'name brand'
-    })
+    },{
+        path: 'author',
+        select: 'username'
+    }]);
     res.send(comment);
 }
 
@@ -64,7 +67,7 @@ async function remove(req, res) {
             comment.car,
             { $pull: { comments: comment._id } }
         )
-        res.send({ message: 'comment deleted successfully' })
+        res.send({ message: 'Comment deleted successfully' })
     } catch (error) {
         console.error(error)
         res.status(500).send({ error: 'there is an error, retry' })
@@ -79,9 +82,15 @@ async function update(req, res) {
     if (comment.author.toString() !== userConnected) {
         return res.status(400).send({error:'You\'re not allowed to update this comment'});
     }
-    await Comment.findByIdAndUpdate(req.params.id, data, { new: true }).populate('car')
+    const updatedComment = await Comment.findByIdAndUpdate(req.params.id, data, { new: true }).populate([{
+        path: 'car',
+        select: 'name brand'
+    },{
+        path: 'author',
+        select: 'username'
+    }])
     if (comment) {
-        res.status(201).send({ message: 'Comment updated successfully', comment })
+        res.status(201).send({ message: 'Comment updated successfully', updatedComment })
     } else {
         res.status(404).send({ error: 'Comment not found' })
     }
