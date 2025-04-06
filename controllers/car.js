@@ -15,7 +15,11 @@ async function index(req, res) {
 async function show(req, res) {
     const car = await Car.findById(req.params.id).populate([{
         path: 'comments',
-        select: 'content'
+        select: 'content createdAt',
+        populate: {
+            path: 'author',
+            select: 'username'
+        }
     },{
         path:'author',
         select: 'username'

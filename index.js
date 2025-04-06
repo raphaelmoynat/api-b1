@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 require('dotenv').config();
 console.log(process.env.MONGODB_URI);
 const mongdbUri = process.env.MONGODB_URI;
+const cors = require('cors')
 
 const carsRoutes = require('./routes/cars');
 const authRoutes = require('./routes/auth');
@@ -21,6 +22,13 @@ mongoose.connect(mongdbUri)
 
 app.use(express.json())
 app.use(express.static('public'))
+
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 
 app.use('/cars', carsRoutes);
